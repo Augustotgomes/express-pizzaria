@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('includes/head', {titulo:tituloDaPagina})%>
+<body>
+    <%- include('includes/header') %>
+    <div class="container">
+        <% if(typeof(usuarioLogado) != 'undefined')} %>
+        <h1>Olá <%= usuarioLogado%></h1>
+        <%}%>
+        <section class="row p-5">
+
+        <% if(cardapio != undefined && cardapio.length > 0) {%>  
+
+            
+       <% cardapio.forEach((pizza, index) =>{ %>
+            <div class="col-md-4">
+                <div class="card">
+                    <% if(pizza.imgPizza != undefined || pizza.imgPizza != null) {%>
+                        <img style="height: 200px; object-fit:cover;" src="/cardapioImg/<%=pizza.imgPizza%>" class="card-img-top" alt="imagem da pizza">
+                    <% } else { %>
+                        <img style="height: 200px; object-fit:cover;" src="/cardapioImg/padrao.png<%=pizza.imgPizza%>" class="card-img-top" alt="imagem da pizza">
+                    <% } %>
+                    <div class="card-body">
+                        <h5 class="card-title"><%= pizza.nome %></h5>
+                        <p class="card-text">R$ <%= pizza.preco %></p>
+                    </div>
+                    <form type="submit" action="/cardapio/deletar/<%= index %>
+                        ?_method=DELETE" method="post">
+                        <div class="card-footer">
+                           <button class="btn btn-danger"> Excluir</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+       <% }) %>
+        
+        <% } else { %>
+            <h1>Não tem pizzas cadastradas no sistema!</h1>
+        <% } %>
+        <div class="col-12 mt-5">
+            <a href ="/cardapio/cadastro" class="btn btn-primary">Cadastrar Pizza</a>
+        </div>
+          
+        </section>
+    </div>
+</body>
+</html>
